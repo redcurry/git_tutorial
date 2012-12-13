@@ -39,6 +39,9 @@ projects because we would like to keep track of who edited something.
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
 
+To change your identity for a specific repository (not all),
+omit the --global option.
+
 Create a project and a file
 ---------------------------
 
