@@ -1,0 +1,316 @@
+<!-- Notes from the book Git by O'Reilly -->
+
+You can commit a file directly (skipping the stage):
+
+  git commit program.py
+
+To see more details about your last commit:
+
+  git show
+
+To see more details about a particular commit:
+
+  git show [commit_id]
+
+To show a concise "log" of commit comments (e.g., last 10) of current branch:
+
+  git show-branch --more=10
+
+To remove a file:
+
+  rm program.py
+
+But then you have to say the following to stage the change:
+
+  git rm program.py
+
+But you can remove and stage the change with one step:
+
+  git rm program.py
+
+In either case, you have to commit for the change to be recorded.
+
+To rename a file, you can do it step by step, but it's easier to say:
+
+  git mv program.py my_program.py
+
+And then commit.
+
+To list all configuration settings (system, global, and local):
+
+  git config -l
+
+To create an alias:
+
+  git config --global alias.show-graph 'log --graph --abbrev-commit --pretty=oneline'
+
+In Git, the entire repository (including its history) is in your working
+directory (in .git).
+
+In a clone, configuration information (in .git/config) is not copied.
+
+The "object store" contains everything about the repository
+  (compressed into "pack files") stored in four types of structures:
+  blobs, trees, commits, and tags.
+
+Blob: the data of a specific version of a file.
+Tree: the information about one directory (includes references to
+  subdirectories)
+Commit: metadata for each change, including author, date, and log message.
+  Each commit object points to a tree object "snapshot".
+Tag: name of a specific object (usually a commit object).
+
+"The 'index' captures a version of the project's overall structure
+at some moment in time."
+  - "you execute Git commands to stage changes in the index."
+  - "you can also remove or replace changes in the index."
+
+Git objects have a unique identifier (SHA1 hash value) based on the contents
+  of the object. They're effectively unique, so that only identical objects
+  have the same hash value.
+
+Git tracks the content of a file (based on its hash value) and not the file
+  itself, so that two separate files with the same content are given the same
+  blob object (file names are handled in "secondary ways"). If one of those
+  files' content changes, it is given a new blob object.
+
+"Git's internal database efficiently stores every version of every file
+---not their differences---as files go from one revision to the next."
+  - This means that to show you differences, Git must compute these differences,
+    as they are not stored directly.
+  - However, to efficiently store information, Git does store deltas
+    or differences between files, but they are not necessarily differences
+    between file versions, but rather deltas that make compression more
+    efficient
+
+Git stores pathnames separately from the content, and pathnames are of course
+needed when the directory structure must be recreated.
+
+Figures 4-1 and 4-2 show nicely how everything may be visualized,
+it makes a nice exercise for students to figure out Figure 4-2.
+
+To display the contents of a blob (found in .git/objects/[prefix]/[object_id]):
+
+  git cat-file -p [full_object_id]  # full_object_id = [prefix][object_id]
+
+Because every object has a hash value, and a commit object contains the hash
+value of the tree it points to and the hash value of its parent commit,
+a specific commit hash value is a unique representation of the entire
+repository (including its entire history). This allows for efficient comparison
+of objects (even very large ones).
+
+The steps and results in "Tree Hierarchies" (p. 43-44) also make for a good
+exercise for students to draw the objects and pointers.
+
+"Commit objects are ... stored in a graph structure," such that it points
+to one or more parents.
+  - (But the commit object itself doesn't seem to contain the parent id)
+  - More details to come in Chapter 6
+
+To "create an annotated, unsigned tag with a message on a commit":
+
+  get tag -m "Tag version 1.0" V1.0 [commit_id]
+
+Tag objects usually tag a commit object, "which points to a tree object,
+  which encompasses the total state of the entire hierarchy of files
+  and directories within your repository."
+
+Three types of files:
+ - Tracked: File in repository or staged (git add)
+ - Ignored: May be in working directory, but not in repository,
+     and must explicitly be declared as ignored (list in .gitignore)
+ - Untracked: "not found in either of the previous two categories"
+     - Like ignored, but wasn't explicitly told to be ignored;
+       default type for a new file not in repository
+
+"When git add is used on a directory name, all of the files and subdirectories
+beneath it are staged recursively."
+
+To cancel a commit operation while you're in your editor about to enter
+a log message: exit the editor without saving, or delete the entire message
+and save/exit.
+
+"git rm" only removes tracked files (use normal "rm" if ignored or untracked).
+
+"get reset HEAD <file>" to undo a "git rm" of a file.
+
+After a "git mv", "git log <file>" of the new name of the file will give
+the history limited to that of that particular file name, but you can use
+"git log --follow <file>" to get the whole history of the content
+
+Figures 5-1 to 5-4 illustrate how objects are represented in the object store
+(good exercise for students).
+
+Don't be afraid to make frequent commits --- usually at a logical step
+(e.g., compiles and works)
+
+A ref is a hash ID that refers to an object in the object store;
+a symref is a name that indirectly points to such object.
+
+Special Git symrefs:
+  HEAD: refers to the most recent commit on the current branch;
+    changing branches changed the HEAD
+  ORIG_HEAD: After a merge or reset (or others), refers to the previous version
+    of HEAD before the new change; allows you to recover to previous state
+  FETCH_HEAD: refers to the HEAD of the last branch fetched using "git fetch"
+    and can be used only immediately after a fetch operation.
+  MERGE_HEAD: refers to the "other" commit that is being merged into HEAD
+
+(Not sure how important relative commit names are, like "master^2~3")
+
+To see log of only a range: git log [since]..[until], e.g.,
+  git log 48b2..HEAD         # Doesn't include the 48b2 entry, starts after it
+
+Ways of viewing log (options):
+  --pretty=[oneline,short,full]    # How much info of commit to display
+  --stat                           # Summary of changes
+  --abbrev-commit                  # Short commit ids
+
+To display a single object:
+  git show [reference]
+
+Relative commit names: p. 69
+
+p. 74-77 explain how to draw commit graphs (important for visualization)
+
+commit ranges: p. 78
+  - A..B means everything reachable by B, but not by A (including A),
+    so it includes (A + 1), (A + 2), ..., B
+  - it's really a subtraction: B - A
+
+You can use "git bisect" to find the commit in which an error/fault
+was introduced (see p. 84)
+  - in a "clean" (i.e., committed) directory, start with "git bisect start"
+  - specify that the current commit is by with "git bisect bad"
+  - then specify the good known commit with "git bisect good [commit_id]"
+  - now analyze current version (compile it, run it, test it) and specify
+    whether it's good or bad with "git bisect good" or "git bisect bad"
+  - after finding the faulty commit, end everything with "git bisect reset"
+
+Use "git blame -L [start_line],[end_line] [file_name]" to see the last commit
+that edited the lines specified in the file specified.
+
+"git log -S[string]" searches the history of a file's changes for [string],
+reporting commits that added or deleted lines that contained [string].
+However, if the number of lines added and deleted are the same, then
+it won't report that commit.
+  - Use like: git log -S[string] --pretty=oneline --abbrev-commit [file_path]
+
+branches can contain '/' like bugs/pr-1024 and bugs/pr-1198 to organize
+yourself, and use things like wildcards like "git show-branch bugs/*"
+
+Git doesn't keep track of the commit at which a new branch was made,
+but this can be figured out algorithmically by Git with:
+  git merge-base [original-branch] [new-branch]
+
+You can create a branch from a different commit that the current one:
+  git branch [branch-name] [commit_id]
+
+Actually, "git show-branch" lists the commits for different branches
+up to the point in which commits are common for all branches
+(can increase display with --more=n and can limit branches by calling
+"git show-branch [branches]" where branches could also be a wildcard,
+like "bugs/*"
+
+The "git show" command can also display the contents of a file in a particular
+branch (I also tried a commit_id rather than branch_name and it appeared
+to work):
+  git show [branch_name]:[file_path]
+
+If you make changes in your working directory and checkout a branch,
+and if there are no conflics, Git will merge the changes into the new branch.
+But if there are conflicts, Git will give you an error unless you use the -m
+option in "git checkout", which will force Git to merge the changes.
+(It might be good here to draw commit graph to show what's going on.)
+
+Combine -b and -m options in "git checkout" to create a new branch
+with the current changes in the working directory.
+
+You can checkout any commit, which will put you in a 'detached HEAD' state.
+At this point, you can create a new branch ("git checkout -b [branch_name]")
+to make changes based on the commit you're on
+(but remember that you could have done this without checkout out the commit
+first with "git checkout -b [branch_name] [commit_id]").
+You can also make commits without creating a new branch,
+but when you checkout to another branch, Git will advise you to create a branch
+for those commits, and will then switch to the branch you specified. If you
+didn't write down what Git told you to in order to save your commits to a new
+branch, I'm not sure how to get it back---the commits are in some unnamed
+branch.
+
+Git will give you an error if you try to delete a branch where it's commits
+are not part of the history of your current HEAD (because this would cause
+you to lose commits on that branch that haven't been merged anywhere).
+You can force the deletion with the -D option ("git branch -D [branch_name]").
+
+Four kinds of git diff (see p. 109).
+
+"You are not required to stage all the changes from your working directory for
+asingle commit. In fact, if you find you have conceptually different changes in
+your working diroctery ththat should be made in different commits, you can
+stage one set at a time..." (p. 111).
+
+Can specify a path (file, directory) in "git diff" to give you the differences
+for only that path.
+
+Can use --S[string] as an option in "git diff" to search for a string.
+
+Before merging, clean up your working directory (commit stuff).
+
+In a merge, the current branch is the target of the merge,
+so that you merge *other* branches into it.
+
+Alternative to gitk: git log --graph --pretty=oneline --abbrev-commit
+
+"git diff" after a (conflict) merge show the conflict(s) between files.
+  - There are two columns before each changed line:
+    the first column shows the differences b/w working directory
+    and the HEAD, whereas the second column shows the differences
+    b/w working directory and the MERGE_HEAD
+  - If you edit some lines in the conflicted file in favor or one branch,
+    "git diff" won't show you any differences for those lines
+    because they match one of the branches (even though there may be
+    differences with the working directory)
+    - It's a "feature" so that you don't have to worry about
+      lines you've manually resolved (p. 132)
+    - But if you edit conflicted lines to something that doesn't match
+      either branch, "git diff" will show them
+"git status" after a (conflict) merge will say "Unmerged paths"
+  to show that a merge is still needed.
+
+At this point (when a merge is halted), MERGE_HEAD points to the tip
+  of the branch being merged.
+
+For example, "git diff HEAD" (or git diff --ours) compares the working
+  directory with the last commit in the current branch,
+  whereas "git diff MERGE_HEAD" (or git diff --theirs) compares the working
+  directory with the last commit in the other branch.
+
+To show the commits related to files that produced the conflict,
+  use "git log --merge --left-right"
+  - The --left-right option shows a '<' for our version and '>' for
+    the other branch.
+  - One can add the -p option to show the actual diffs
+
+Use "git checkout [--ours|--theirs] [file_name]" to choose one version
+  of the file or the other.
+
+To complete the conflict resolution, use "git add [file_name]"
+
+After a commited merge, "git show" will show you the merge commit
+and the diff showing the complete changes (the format w/ two columns of +/-)
+  - There is a "Merge:" entry in the commit showing the parents of the merge
+
+Undo commands:
+  - Before you've committed the merge, go back to the state before
+    calling "git merge", use "git reset --hard HEAD"
+  - Before you've committed the merge, go back to the state after
+    calling "git merge" (i.e., try the conflict resolution again"),
+    use "git checkout -m"
+  - After you've committed the merge, go back to the state before
+    calling "git merge", use "git reset --hard ORIG_HEAD"
+  - (Warning: calling the commands using "git reset --hard" will replace your
+    working directory with the correct version, which means any uncommited
+    changes will be replaced, too)
+
+(Come back to pages 140-145 because it was complicated.)
