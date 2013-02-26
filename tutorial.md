@@ -32,36 +32,37 @@ Ok, let's start using Git!
 Identify yourself
 -----------------
 
-Before we start to use Git, let's identify ourselves to Git so that all our
+Before we start using Git, let's identify ourselves to Git so that all our
 revisions have an author.  This is especially important in collaborative
 projects because we would like to keep track of who edited something.
 
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
 
-To change your identity for a specific repository (not all),
-omit the --global option.
+To change your identity for a specific repository, omit the --global option.
 
 Create a project and a file
 ---------------------------
 
 Now we're ready to use git.  Let's start by creating a directory for our new
-project; we'll call this directory "project" (I know, very original).  For this
-project, let's say that we need a program that would calculate the mean of its
-arguments; let's create such a program in python.
+project; we'll call this directory "project-[INITIALS]".  For this project,
+let's say that we need a program that would calculate the mean of the standard
+input; let's create such a program in python.
 
     import sys
 
     sum = 0
+    n = 0
 
-    for num in sys.argv[1:]:
+    for num in sys.stdin:
       sum += float(num)
+      n += 1
 
-    print sum / (len(sys.argv) - 1)
+    print sum / n
 
 And let's test it:
 
-    python mean.py 1 2 3 4 5 6 7 8
+    for n in $(seq 20); do echo $n; done | python mean.py
 
 Initialize git
 --------------
@@ -75,7 +76,6 @@ interested in tracking this project:
 All this did was to create an empty repository, but it won't automatically
 track all of the files in the project.
 
-
 Add file to repo
 ----------------
     
@@ -88,45 +88,29 @@ We've just told git that we want to track this file.
 Initial commit
 --------------
 
-Git doesn't work like Track Changes in Word, where changes are tracked
-automatically.  We must tell git manually when to save a set of changes that we
-make (this is called a "commit").  Because we've added a file to track, we now
-want to tell git to save this change.
+We must tell git when to save a set of changes that we make (this is called a
+"commit").  Because we've added a file to track, we now want to tell git to
+save this change.
 
     git commit -m "Added initial file to project."
 
 It tells you there that you've changed one file, in our case we've addeded it,
-and added 8 lines of text.  We can view a history (or log) of our commits with:
+and added 10 lines of text.  We can view a history (or log) of our commits with:
 
     git log
 
 This shows you the commit id (also called revision number), author, date, and
 your comment.
 
-
 The stage and committing
 ------------------------
 
-Let's make changes to our program and then commit those.  Right now our program
-crashes if we don't provide any arguments, so let's add some code to check when
-no arguments are given:
+(Switch person on terminal.) Let's make changes to our program and then commit
+those. Let's add comments to our code.
 
-    import sys
+  # Sum input values
 
-    if len(sys.argv) == 1:                   # Added
-      print 'Error: No arguments given.'     # Added
-      exit()                                 # Added
-
-    sum = 0
-
-    for num in sys.argv[1:]:
-      sum += float(num)
-
-    print sum / (len(sys.argv) - 1)
-
-Let's test the program (python mean.py) and, yes, we get an error message if
-don't provide any arguments and the program quits more gracefully.  At this
-point, the file we've changed and the file that's in the repository are
+At this point, the file we've changed and the file that's in the repository are
 different.  We can check what those differences are with:
 
     git diff
@@ -139,21 +123,17 @@ prettier output by telling git we want things in color:
     git config --global color.diff auto
     git diff
 
-Pretty! Now changes are easier to see.  We can get a less detailed report of
-what files we've changed with:
+Now changes are easier to see.  We can get a less detailed report of what files
+we've changed with:
 
     git status
 
 This line tells us that we've modified mean.py; notice that this status is
-under the headline "Changes not staged for commit." What does this mean? It
-means that we've made changes to files, but we haven't told git that we want
-those changes saved on our next commit.  In other words, if we do commit right
-now:
+under the headline "Changes not staged for commit." This means that we've made
+changes to files, but we haven't "staged" them; that is, we haven't told git
+that we want those changes stored the next time we tell git to commit.
 
-    git commit -m "Handled case with no arguments."
-
-It doesn't work---it just tells us again that we haven't "staged" the files
-we've changed.  To stage those files, we do another git add:
+We must add the files we've changed to the stage:
 
     git add mean.py
 
@@ -163,53 +143,10 @@ Now, let's do a status to see what git tells us:
 
 Ok, now it tells us that the changes in mean.py will be commited next time we
 run git commit; it also tells us how to unstage the file if we made a mistake.
-Because we just staged our file, it is identical to what's on the "stage", so
-when we say:
-    
-    git diff
 
-we don't get anything. However, there ARE differences between what we've staged
-and what's in the repository; we can get those diffences with:
-
-    git diff --staged      (or 'git diff --cached' for older versions)
-
-Let's say that you just remembered you wanted to add a comment to mean.py
-before you commit; we just make the change:
-
-    # Print the mean of the numbers given as arguments
-    ...
-
-Now when we do a git diff, we get the difference between what we've staged and
-our current file:
-
-    git diff
-
-There we see the two lines what we've added.  Now let's look at our status:
-
-    git status
-
-We have two sections: changes ready to be commited (i.e., staged) and changes
-we've made but haven't staged.  In this case, these changes are all in the same
-file, so we see the same file in two different sections.  In other words, at
-this point, we have THREE versions of the same program: what we initially
-commited, what we staged, and what we just changed.  If we commit right now,
-only what we've staged will be commited, not the new changes; to stage the new
-changes, we use add again:
-
-    git add mean.py
-
-We then check what will be commited:
-
-    git status
-
-And we can also check all the changes that will be commited:
-
-    git diff --staged
-
-Here we see all of the changes we've made to mean.py; and then we finally
-commit.  When we first commited, we added a message inline, but if we want a
-long, multi-line message, we can use a text editor to add the message.  First,
-we specify which editor will be our default:
+When we first commited, we added a message inline, but if we want a long,
+multi-line message, we can use a text editor to add the message.  First, we
+specify which editor will be our default:
 
     git config --global core.editor vim
 
@@ -222,12 +159,11 @@ commit without specifying a message:
 And our editor opens up with the latest status commented out, and we add the
 message at the top:
 
-    1. Added purpose of program
-    2. Handled the case when no arguments are given
+    Added a comment.
 
-And then we save and exit; if you don't type in a message and exit, the commit
-is cancelled, which is useful when you change your mind and don't want to
-commit just yet.  Now status and diff show nothing:
+Then we save and exit; if you don't type in a message and exit, the commit is
+cancelled, which is useful when you change your mind and don't want to commit
+just yet.  Now status shows nothing:
 
     git status
     git diff
@@ -235,6 +171,73 @@ commit just yet.  Now status and diff show nothing:
 And we have a new entry in our history or log:
 
     git log
+
+GitHub
+------
+
+Git allows you to control your project's history on your computer, but that's
+not helpful if you'd like others to contribute to your project, or if you'd
+like to work on your project from different computers.  GitHub is a place where
+you can host your projects online, so that it can be accessible to anyone you
+allow.  The concept is similar to Google Docs, where your documents are online
+so that anyone you allow can access them and edit them.
+
+Hopefully, you've all created a GitHub account.
+
+Let's go to the github website: github.com.  Please log in to your account.
+Let's create a new repository where we'll store our created project.  We'll
+call it project, and give it a short description:
+
+    Repository name: project-[INITIALS]
+    Description:     Sample project
+
+We have to make the project public for a free account; that's it! We're ready
+to copy our files to our new repository. Just follow the steps givet to you.
+Let's go back to the command-line, add a remote location for our repository:
+
+    git remote add origin git@github.com:redcurry/project-[INITIALS].git
+
+and push the files into the remote repository:
+
+    git push origin master
+
+Don't worry what origin and master are at the moment; we'll revisit those
+later.  Now we can check our repository online and see the files that we've
+added to it, along with all of the history of the project.
+
+Pair up with another group. One group is going to edit the other group's
+project. This will show you how easy it is to collaborate among people.
+
+The other group will watch, for now. The group that is watching: tell the other
+group how to get a copy of your repository. This information is on your GitHub
+repository home page.
+
+The group that is doing the editing: Go up one directory, and then make a copy
+of this repository:
+
+    git clone git@github.com:redcurry/project-[INITIALS].git
+
+Notice you not only have the project file(s) but also its history:
+
+    git log
+
+Edit mean.py to make it more succinct:
+
+  import sys
+
+  nums = [float(num) for num in sys.stdin]
+  print sum(nums) / len(nums)
+
+Add and commit:
+
+  git add mean.py
+  git commit -m "Refactored program."
+
+Check the log and notice your new change. Your changes have been applied
+on GitHub. To do that, type:
+
+  git push
+
 
 Comparing different revisions
 -----------------------------
@@ -248,7 +251,7 @@ We don't even have to paste the entire number, just enough for them to be
 unique.
 
 
-***
+**
 Skip this if short on time
 
 If we want to know the differences between every commit we've ever made, we
@@ -269,7 +272,7 @@ This will output the last 3 commit messages; you can combine options, of course
 log output format, showing various levels of detail of a commit, and even
 drawing a graph showing your branch and merge history (which we'll talk about
 later).
-***
+**
 
 One useful option to git log is --relative-date, which instead of giving you
 the date/time in which a commit was done, it shows you the date/time relative
@@ -465,35 +468,6 @@ always works, and any possible new features or bug fixes must be worked on a
 separate branch.  Once a new feature has been tested very well, it can be
 merged back into the master branch.
 
-GitHub
-------
-
-So far, you've learned how to manage your changes on one computer, but as I
-said in the beginning, you can work on the same project from different
-computers---either because you use more than one computer to work, or because
-you're collaborating with others on the same project.  The best way to do this
-is to have a remote location that contains your repository and that you can
-access from multiple computers.  This is why GitHub was created. It is a server
-that contains repositories that people can access from anywhere.  Let's go to
-the github website: github.com.  Please log in to your account.  Let's create a
-new repository where we'll store our created project.  We'll call it project,
-and give it a short description:
-
-    Repository name: project
-    Description:     Sample project
-
-We have to make the project public for a free account; that's it! we're ready
-to copy our files to our new repository.  Let's go back to the command-line,
-add a remote location for our repository:
-
-    git remote add origin git@github.com:redcurry/project.git
-
-and push the files into the remote repository:
-
-    git push origin master
-
-Now we can check our repository online and see the files that we've added to
-it, along with all of the history of the project and other visual tools.
 
 
 Cloning
