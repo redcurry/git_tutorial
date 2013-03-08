@@ -35,8 +35,6 @@ projects because we would like to keep track of who edited something.
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
 
-To change your identity for a specific repository, omit the --global option.
-
 Create a project and a file
 ---------------------------
 
@@ -84,9 +82,9 @@ We've just told git that we want to track this file.
 Initial commit
 --------------
 
-We must tell git when to save a set of changes that we make (this is called a
-"commit").  Because we've added a file to track, we now want to tell git to
-save this change.
+We must also tell git when to save a set of changes that we make (this is
+called a "commit").  Because we've added a file to track, we now want to tell
+git to save this change.
 
     git commit -m "Added initial file to project."
 
@@ -101,8 +99,8 @@ your comment.
 The stage and committing
 ------------------------
 
-(Switch person on terminal.) Let's make changes to our program and then commit
-those. Let's add comments to our code.
+Let's make changes to our program and then commit those. Let's add comments to
+our code.
 
   # Sum input values
 
@@ -171,24 +169,24 @@ And we have a new entry in our history or log:
 GitHub
 ------
 
-Git allows you to control your project's history on your computer, but that's
-not helpful if you'd like others to contribute to your project, or if you'd
-like to work on your project from different computers.  GitHub is a place where
-you can host your projects online, so that it can be accessible to anyone you
-allow.  The concept is similar to Google Docs, where your documents are online
-so that anyone you allow can access them and edit them.
+Git allows you to control your project's history on your computer, but you can
+also allow others to contribute to the same project, or you might want to work
+on the same project from a different computer.  GitHub is a place where you can
+host your projects online, so that it can be accessible to anyone you allow.
+The concept is similar to Google Docs, where your documents are online so that
+anyone you allow can access them and edit them.
 
 Hopefully, you've all created a GitHub account.
 
 Let's go to the github website: github.com.  Please log in to your account.
-Let's create a new repository where we'll store our created project.  We'll
-call it project, and give it a short description:
+Let's create a new repository where we'll store our created project.  Name it
+the same as the project directory you created, and give it a short description:
 
     Repository name: project-[INITIALS]
     Description:     Sample project
 
-We have to make the project public for a free account; that's it! We're ready
-to copy our files to our new repository. Just follow the steps givet to you.
+We have to make the project public with a free account; that's it! We're ready
+to copy our files to our new repository. Just follow the steps given to you.
 Let's go back to the command-line, add a remote location for our repository:
 
     git remote add origin git@github.com:redcurry/project-[INITIALS].git
@@ -201,51 +199,49 @@ Don't worry what origin and master are at the moment; we'll revisit those
 later.  Now we can check our repository online and see the files that we've
 added to it, along with all of the history of the project.
 
-Pair up with another group. One group is going to edit the other group's
-project. This will show you how easy it is to collaborate among people.
+Pair up with another person. You are going to make changes to each other's
+project. This will show you how easy it is to collaborate among people.  First,
+give each other the address of your repository (use the HTTP protocol). This
+information is on your GitHub repository home page.
 
-The other group will watch, for now. The group that is watching: tell the other
-group how to get a copy of your repository. This information is on your GitHub
-repository home page.
+Go up one directory, and then copy of this repository into your computer.
 
-The group that is doing the editing: Go up one directory, and then make a copy
-of this repository:
+    git clone https://github.com/redcurry/project-[INITIALS].git
 
-    git clone git@github.com:redcurry/project-[INITIALS].git
-
-Notice you not only have the project file(s) but also its history:
+Go into this new project directory.  Notice you not only have the project
+file(s) but also its history:
 
     git log
 
-Edit mean.py to make it more succinct:
-
-  import sys
-
-  nums = [float(num) for num in sys.stdin]
-  print sum(nums) / len(nums)
-
-Add and commit:
+Edit mean.py in some way (perhaps change a variable name). Then add the file
+and commit (with a meaningful message):
 
   git add mean.py
-  git commit -m "Refactored program."
+  git commit -m "Edited the program."
 
-Check the log and notice your new change. Your changes have been applied
-on GitHub. To do that, type:
+Check the log and notice your new commit entry. Now push your changes to
+GitHub:
 
   git push
 
+Go back to your original project. Get (or pull) the changes made by your group
+partner, and check to see that they are there:
+
+  git pull
+  git log
+
+Notice the author names in the commits. They should be different.
 
 Comparing different revisions
 -----------------------------
 
-If we want to know what changed between our older commit and our newest commit,
-we use these revision numbers:
+If we want to know what changed between our older commit and the new commit, we
+use git diff with the two revision numbers:
 
-    git [older number] [newer number]
+    git diff [older number] [newer number]
 
 We don't even have to paste the entire number, just enough for them to be
 unique.
-
 
 **
 Skip this if short on time
