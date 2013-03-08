@@ -1,11 +1,9 @@
 Introduction
 ------------
 
-What is version control (also known as revision control)?  If you're familiar
-with Track Changes in Microsoft Word, then you already know what it is.
 Version controls gives you the ability to keep track of changes made to
 documents through time.  Git is a sophisticated, general-purpose version
-control system that gives you a lot more power for managing your documents.  In
+control system that gives you a lot of power for managing your documents.  In
 addition to tracking your documents' changes line-by-line, Git makes it easy to
 work on the same project from different computers---either because the project
 is collaborative or simply because you have multiple computers from which you
@@ -18,16 +16,14 @@ your main project.  Later when you're happy with the results of your branch,
 you can incorporate those changes easily back into your main project; I'll show
 you how to use this feature.
 
-Now I've mentioned that Git keeps track of your documents, but what I mean by
-document is any plain text file--- whether it's source code, HTML files, or a
+I've mentioned that Git keeps track of your documents, but what I mean by
+document is any plain text file---whether it's source code, HTML files, or a
 LaTeX manuscript.  You won't be able to track changes line-by-line for
 non-plain text files, like images and Word documents because they don't have
 lines of text; even though Word documents contain text, they also contain
 non-text information about how to format the text.  So if you do your
 manuscripts in Word or a non-plain text word processor, you'll likely use Git
 mostly for source code.
-
-Ok, let's start using Git!
 
 Identify yourself
 -----------------
