@@ -247,8 +247,8 @@ Screwing up a file
 ------------------
 
 Let's say that we open up our mean.py to make some changes, and a cat walks
-over our keyboard and accidently saves the file! Crap!  First, let's look at
-the status
+over our keyboard and accidently saves the file! In reality, we've probably
+make a mistake and saved it. First, let's look at the status
 
     git status
 
@@ -256,9 +256,9 @@ The status actually tells us how to undo those changes:
 
     git checkout -- mean.py
 
-We open the file and... Yay... everything's good!  Now, be careful with this
-command because if you had made important changes before your cat screwed them
-up, this command would replace those important changes with the older version.
+We open the file and... everything's good!  Now, be careful with this command
+because if you had made important changes before your cat screwed them up, this
+command would replace those important changes with the older version.
 
 Branching
 ---------
@@ -270,15 +270,16 @@ makes very easy to use: branching.  Look at the output of git status:
 
 Notice that it tells us we're on branch "master." This is our main branch of
 work. But sometimes it's useful to be able to diverge from our main line of
-work to experiment on some new code without messing up our main work.  For
-example, let's say that we want to extend the functionality of our python
+work to experiment on some new code without messing up our main work.
+
+For example, let's say that we want to extend the functionality of our python
 program to calculate the mean of numbers in a file.  We could start editing
 mean.py and change some code, but say we're not sure yet what needs to be
 changed, and we want to have the chance to play around with the code, while not
 messing up mean.py.  We can create a new branch of work, where we can
 experiment with code, even commit those changes and keep a local history of
-those changes without even touching up our main branch.  To do create a new
-branch, we say:
+those changes without even touching our main branch.  To create a new branch,
+we say:
 
     git branch handle_file
 
@@ -298,37 +299,33 @@ Now we see the star next to handle_file.  Let's make some changes to mean.py:
 
     import sys
 
-    if len(sys.argv) == 1:
-      print 'Error: No arguments given.'
-      exit()
-
     sum = 0
-    n = 0                                         # Added
+    n = 0
 
-    for num in open(sys.argv[1]):                 # Changed
+    for num in open('data.txt'):
       sum += float(num)
-      n += 1                                      # Added
+      n += 1
 
-    print sum / n                                 # Changed
+    print sum / n
 
 Add a data.txt file with numbers in it, and test the program.  It seems to
-work, so let's commit those changes now.
+work, so let's commit those changes now by using a shorthand to both stage and
+commit those files git is tracking:
 
     git commit -am 'Changed to handle numbers in a file."
 
-I'm using the shorthand -a to tell git to automatically stage those files that
-it knows about (those being tracked).  And let's look at our new log:
+And let's look at our new log:
 
     git log
 
 Notice that the commits we made in the main branch are there, that's because
-it's a branch, not an independent root (if you will).  When we're happy about
-the changes we've made, we can integrate (or merge) those changes with the main
-branch.  We must first switch to our master branch, and notice that mean.py is
-now how it used to be:
+it's a branch, not an independent project. When we're happy about the changes
+we've made, we can integrate (or merge) those changes with the main branch.  We
+must first switch to our master branch, and notice that mean.py is now how it
+used to be:
 
     git checkout master
-    vim mean.py
+    cat mean.py
 
 Also notice that the data.txt file is there, even though we added it in the
 handle_file branch; this is because we never told git to track this file, so
@@ -346,13 +343,15 @@ Merge conflicts
 ---------------
 
 Merging can become a little more complicated when you make parallel changes on
-the same line in different branches; for example, let's make a new branch and
-change a line (we'll do it in a single step this time):
+the same line in different branches (either by you or your collaborator).
+
+For example, let's make a new branch and change a line (we'll do it in a single
+step this time):
 
     git checkout -b new_change
-***
+
     ...
-    file_name = sys.argv[1]
+    file_name = 'data.txt'
     for num in open(file_name):
     ...
 
@@ -361,18 +360,17 @@ Test it, and then commit those changes:
     git commit -am "Created file_name variable."
 
 Let's switch back to our master branch, and make changes to a line we changed
-in our other branch:
+in our other branch (change the data file name).
 
     git checkout master
-***
+
     ...
-    for number in open(sys.argv[1]):
-      sum += float(number)
+    for num in open('data_2.txt'):
     ...
 
 Test it, and commit it:
 
-    git commit -am "Changed variable name."
+    git commit -am "Changed the data file name."
 
 Now let's merge the changes we made in our new_change branch into our master
 branch:
@@ -387,9 +385,8 @@ branch, and the stuff between `============` and `>>>>>>>>>>>> new_change` is
 in the new_change branch.  Let's manually merge these changes:
 
     ...
-    file_name = sys.argv[1]
-    for number in open(file_name):
-      sum += float(number)
+    file_name = 'data_2.txt'
+    for num in open(file_name):
     ...
 
 To mark the file as resolved, we simply say:
@@ -404,7 +401,7 @@ Now let's look at our log to confirm that the merge is in our history:
 
     git log
 
-As you can see, the latest log tells you what was marged, and includes the
+As you can see, the latest log tells you what was merged, and includes the
 history of the changes made in the other branch.  Finally, let's delete the old
 branch:
 
@@ -415,77 +412,9 @@ Using branches
 
 So the way you want to use branches is like this:
 
-1. You come up with an idea you want to test
-2. You make a branch and work on that idea (committing to it)
+1. You have a change to make, but you don't want to mess up the main branch
+2. You make a branch and work on that change (committing to it)
 3. If you like the results, merge the new changes back into master
 
 This way your master branch can be clean of possible changes that may end up
-being thrown away.  In fact, some developers have strict development workflows,
-where, for example, the master branch must always be stable; in other words, it
-always works, and any possible new features or bug fixes must be worked on a
-separate branch.  Once a new feature has been tested very well, it can be
-merged back into the master branch.
-
-
-
-Cloning
--------
-
-Let's say you worked on this project at work, and now you need to go home, but
-continue to work on a different computer.  This is the kind of situation that
-version control makes easy to solve; just download the project using Git.
-First, let's go up one directory and create a new one to simulate being on a
-different computer.
-
-    cd ..
-    mkdir home-computer
-    cd home-computer
-
-Now let's download the project:
-
-    git clone git@github.com:redcurry/project.git
-
-This creates a new directory with our project in it:
-
-    ls
-    cd project
-    ls
-
-Notice that data.txt is not there because we never asked git to track it, so we
-lost it forever.  We can now work on our project locally: make changes, commit
-them, make more changes, commit those, etc.  All these commits will be kept
-locally, just as if your local project was a new branch.  We'll edit mean.py
-and commit the changes:
-
-    ...
-    print 'The mean is',
-    print sum / n
-***
-    git commit -am 'Added a polite message.'
-
-When we're done, we can update our remote repository:
-
-    git push
-
-The next day we go back to work and need to get those changes we made at home:
-
-    cd ..
-    cd project
-
-First we fetch the changes that have been made:
-
-    git fetch
-
-Right now we can check the differences between what is in our current directory
-and what we fetched:
-
-    git diff origin/master
-
-Here, "origin/master" indicates to look at the main branch of the remote
-repository (which we just fetched).
-
-Now we merge:
-
-    git merge origin/master
-
-Done.
+being thrown away if those changes are not necessary or don't work.
