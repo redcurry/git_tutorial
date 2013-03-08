@@ -243,40 +243,6 @@ use git diff with the two revision numbers:
 We don't even have to paste the entire number, just enough for them to be
 unique.
 
-**
-Skip this if short on time
-
-If we want to know the differences between every commit we've ever made, we
-give the option -p to git log:
-
-    git log -p
-
-This gives us the commit message, followed by what changed from the previous
-commit. Warning, if you have a long history with lots of changes, you'll have a
-lot of output.  Quit the log by typing in 'q'.  More often, you just want to
-know the history between the last few commits (like we did above), to do this
-you can send in an option to log with a number:
-
-    git log -3
-
-This will output the last 3 commit messages; you can combine options, of course
-(-p -3) There are a lot of other options to git log, like ways of changing the
-log output format, showing various levels of detail of a commit, and even
-drawing a graph showing your branch and merge history (which we'll talk about
-later).
-**
-
-One useful option to git log is --relative-date, which instead of giving you
-the date/time in which a commit was done, it shows you the date/time relative
-to now (this is great if you have poor mental math like me):
-
-    git log --relative-date
-
-Another option is --since, which tells git to display the history only after a
-specific date (absolute or relative); for example
-
-    git log --since="50 minutes ago"
-
 Screwing up a file
 ------------------
 
