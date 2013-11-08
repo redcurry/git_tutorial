@@ -314,3 +314,31 @@ Undo commands:
     changes will be replaced, too)
 
 (Come back to pages 140-145 because it was complicated.)
+
+Remote Repositories
+-------------------
+
+A "remote" is a shorthand name for a Git URL, and there can be any number
+of remotes in a repository.
+
+Git keeps track of a remote repository in a "remote-tracking" branch,
+which is a branch in my repository for a specific branch in the remote repo.
+
+"git clone" doesn't actually copy everything from the original repository;
+it ignores things relevant only to the original, like remote-tracking branches,
+hooks, configuration files, the reflog, and the stash.
+
+"git clone" converts the local branches in the original repository
+into remote-tracking branches in the cloned repository.
+
+Each new clone maintains a link back to the original repository via a remote
+called "origin." The original repo doesn't know anything about the clone.
+
+The remote repository's branches are available on branch names
+prefixed with original/, like origin/master, origin/dev, etc.
+Too see them, run "git branch -a".
+
+"git show-ref" shows all the references/handles in a repository,
+including references to remote repositories.
+
+(Stopped writing notes after about page 209.)
