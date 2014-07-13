@@ -79,7 +79,7 @@ We must also tell git when to save a set of changes that we make (this is
 called a "commit").  Because we've added a file to track, we now want to tell
 git to save this change.
 
-    git commit -m "Add initial file to project"
+    git commit -am "Add initial file to project"
 
 It tells you there that you've changed one file, in our case we've addeded it,
 and added 10 lines of text.  We can view a history (or log) of our commits with:
