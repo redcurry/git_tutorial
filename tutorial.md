@@ -169,7 +169,14 @@ A new branch has been created. We can list our branches with:
 Here you see our new branch and the master branch;
 the new branch has a star next to it because we're on it.
 
-Let's make some changes to mean.py:
+Before we make any changes to our program,
+add a text file to hold the numbers we want to average:
+
+    for n in $(seq 10); do echo $RANDOM; done > data.txt
+    git add data.txt
+    git commit -am "Add data file with numbers"
+
+Now let's make some changes to mean.py:
 
     # Print the mean of the numbers given in a file
 
@@ -184,11 +191,9 @@ Let's make some changes to mean.py:
 
     print sum / n
 
-Add a data.txt file with numbers in it, and test the program.  It seems to
-work, so let's commit those changes now by using a shorthand to both stage and
-commit those files git is tracking:
+Test the program. It seems to work, so let's commit those changes:
 
-    git commit -am 'Changed to handle numbers in a file."
+    git commit -am 'Handle numbers in a file"
 
 And let's look at our new log:
 
@@ -196,17 +201,16 @@ And let's look at our new log:
 
 Notice that the commits we made in the main branch are there, that's because
 it's a branch, not an independent project. When we're happy about the changes
-we've made, we can integrate (or merge) those changes with the main branch.  We
-must first switch to our master branch, and notice that mean.py is now how it
-used to be:
+we've made, we can integrate (or merge) those changes with the main branch.
+Let's switch to our master branch, and notice that mean.py is how it was:
 
     git checkout master
     cat mean.py
+    git log
 
-Also notice that the data.txt file is there, even though we added it in the
-handle_file branch; this is because we never told git to track this file, so
-git doesn't do anything with it.  Now we merge the changes into master from the
-handle_file branch:
+The data.txt file is not there anymore because it's part of the other branch,
+not this one.
+Now we merge the changes into master from the handle_file branch:
 
     git merge handle_file
 
@@ -214,6 +218,18 @@ Let's verify that mean.py contains the changes we made in the handle_file
 branch, and then we can just delete that branch:
 
     git branch -d handle_file
+
+Using branches
+--------------
+
+So the way you want to use branches is like this:
+
+1. You have a change to make, but you don't want to mess up the main branch
+2. You make a branch and work on that change (committing to it)
+3. If you like the results, merge the new changes back into master
+
+This way your master branch can be clean of possible changes that may end up
+being thrown away if those changes are not necessary or don't work.
 
 Merge conflicts
 ---------------
@@ -282,18 +298,6 @@ history of the changes made in the other branch.  Finally, let's delete the old
 branch:
 
     git branch -d new_change
-
-Using branches
---------------
-
-So the way you want to use branches is like this:
-
-1. You have a change to make, but you don't want to mess up the main branch
-2. You make a branch and work on that change (committing to it)
-3. If you like the results, merge the new changes back into master
-
-This way your master branch can be clean of possible changes that may end up
-being thrown away if those changes are not necessary or don't work.
 
 GitHub
 ------
