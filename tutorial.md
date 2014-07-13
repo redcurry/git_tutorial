@@ -206,23 +206,6 @@ partner, and check to see that they are there:
 
 Notice the author names in the commits. They should be different.
 
-Screwing up a file
-------------------
-
-Let's say that we open up our mean.py to make some changes, and a cat walks
-over our keyboard and accidently saves the file! In reality, we've probably
-make a mistake and saved it. First, let's look at the status
-
-    git status
-
-The status actually tells us how to undo those changes:
-
-    git checkout -- mean.py
-
-We open the file and... everything's good!  Now, be careful with this command
-because if you had made important changes before your cat screwed them up, this
-command would replace those important changes with the older version.
-
 Branching
 ---------
 
