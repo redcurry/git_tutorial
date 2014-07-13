@@ -140,40 +140,36 @@ we can use git diff with the two revision numbers:
 We don't even have to paste the entire number,
 just enough for them to be unique.
 
-Branching
----------
+Make parallel changes
+---------------------
 
-Let's talk about a neat feature of many version control systems, but which git
-makes very easy to use: branching.  Look at the output of git status:
+Let's say we want to extend the functionality of our python program
+to calculate the mean of numbers in a file.
+We could edit mean.py as we've done and commit the changes,
+but say we're not exactly sure what needs to be changed.
+We don't want to screw around with our original mean.py because it works.
+The solution is to create a new branch of work,
+where we make changes and track their history
+without even touching our original mean.py.
+
+Our current work is on a branch called master (by default),
+as git status tells us:
 
     git status
 
-Notice that it tells us we're on branch "master." This is our main branch of
-work. But sometimes it's useful to be able to diverge from our main line of
-work to experiment on some new code without messing up our main work.
+This is our main branch of work.
+Create a new branch:
 
-For example, let's say that we want to extend the functionality of our python
-program to calculate the mean of numbers in a file.  We could start editing
-mean.py and change some code, but say we're not sure yet what needs to be
-changed, and we want to have the chance to play around with the code, while not
-messing up mean.py.  We can create a new branch of work, where we can
-experiment with code, even commit those changes and keep a local history of
-those changes without even touching our main branch.  To create a new branch,
-we say:
+    git checkout -b handle_file
 
-    git branch handle_file
-
-A new branch has been created, we can check our branches with:
+A new branch has been created. We can list our branches with:
 
     git branch
 
-Here you see our new branch and the master branch; the master branch has a star
-next to it because we're still on it.  Let's switch to our new branch:
+Here you see our new branch and the master branch;
+the new branch has a star next to it because we're on it.
 
-    git checkout handle_file
-    git branch
-
-Now we see the star next to handle_file.  Let's make some changes to mean.py:
+Let's make some changes to mean.py:
 
     # Print the mean of the numbers given in a file
 
