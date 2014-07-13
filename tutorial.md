@@ -268,27 +268,40 @@ You can now use this tag to go to this specific revision:
 
 **Exercise**: Go to another revision, tag it; go to master, and tag it, too.
 
-GitHub
-------
+Back-up and share your project
+------------------------------
 
-Git allows you to control your project's history on your computer, but you can
-also allow others to contribute to the same project, or you might want to work
-on the same project from a different computer.  GitHub is a place where you can
-host your projects online, so that it can be accessible to anyone you allow.
-The concept is similar to Google Docs, where your documents are online so that
-anyone you allow can access them and edit them.
+The entire history of your project---your repository---is stored
+in your computer.
+Anyone with access to your repository would have access
+to the entire history of your project.
+You can share this repository with others by having them copy it,
+or you can back it up by copying it to another computer.
 
-Hopefully, you've all created a GitHub account.
+The best way to share your repository with others is to use GitHub.
+GitHub is a place where you can host your projects online,
+so that it can be accessible to anyone you allow.
+Anyone with a copy of the repository can make changes to it
+and add to its history; whether you merge those changes
+into your own copy of the repository is up to you.
 
-Let's go to the github website: github.com.  Please log in to your account.
-Let's create a new repository where we'll store our created project.  Name it
-the same as the project directory you created, and give it a short description:
+Also, by having your repository on GitHub, it's backed up.
+As long as you keep the online repository up to date,
+you don't have to worry about losing your work.
+Just because your repository is online,
+doesn't mean you need to have an Internet connection all the time.
+You can continue working on your project offline,
+and decide to update the GitHub repository later.
+
+Let's go to the GitHub website: github.com, and log into your account.
+Create a new repository where we'll store our created project.
+Name it the same as the project directory you created,
+and give it a short description:
 
     Repository name: project-[INITIALS]
     Description:     Sample project
 
-We have to make the project public with a free account; that's it! We're ready
-to copy our files to our new repository. Just follow the steps given to you.
+Follow the steps given to you to upload your repository to GitHub.
 Let's go back to the command-line, add a remote location for our repository:
 
     git remote add origin git@github.com:redcurry/project-[INITIALS].git
@@ -310,19 +323,18 @@ Go up one directory, and then copy of this repository into your computer.
 
     git clone https://github.com/redcurry/project-[INITIALS].git
 
-Go into this new project directory.  Notice you not only have the project
-file(s) but also its history:
+Go into this new project directory.
+Notice you not only have the project file(s) but also its entire history:
 
     git log
 
 Edit mean.py in some way (perhaps change a variable name). Then add the file
 and commit (with a meaningful message):
 
-  git add mean.py
-  git commit -m "Edited the program."
+  git commit -am "Edit the program"
 
-Check the log and notice your new commit entry. Now push your changes to
-GitHub:
+Check the log and notice your new commit entry.
+Now push your changes to GitHub:
 
   git push
 
@@ -340,8 +352,7 @@ Merge conflicts
 Merging can become a little more complicated when you make parallel changes on
 the same line in different branches (either by you or your collaborator).
 
-For example, let's make a new branch and change a line (we'll do it in a single
-step this time):
+For example, let's make a new branch and change a line:
 
     git checkout -b new_change
 
@@ -352,7 +363,7 @@ step this time):
 
 Test it, and then commit those changes:
 
-    git commit -am "Created file_name variable."
+    git commit -am "Create file_name variable"
 
 Let's switch back to our master branch, and make changes to a line we changed
 in our other branch (change the data file name).
@@ -365,14 +376,14 @@ in our other branch (change the data file name).
 
 Test it, and commit it:
 
-    git commit -am "Changed the data file name."
+    git commit -am "Change the data file name"
 
 Now let's merge the changes we made in our new_change branch into our master
 branch:
 
     git merge new_change
 
-And it fails. Git can't easily merge the changes because we changed some of the
+It fails. Git can't easily merge the changes because we changed some of the
 same lines differently.  We must resolve the conflict manually, but git helps
 us by telling us where the conflicts are in each file.  Just open the file
 mean.py; the stuff in between `<<<<<<<< HEAD` and `==========` is in the master
