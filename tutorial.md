@@ -89,8 +89,8 @@ and added 10 lines of text.  We can view a history (or log) of our commits with:
 This shows you the commit id (also called revision number), author, date, and
 your comment.
 
-The stage and committing
-------------------------
+Additional commits
+------------------
 
 Let's make changes to our program and then commit those. Let's add comments to
 our code.
@@ -115,42 +115,12 @@ we've changed with:
 
     git status
 
-This line tells us that we've modified mean.py; notice that this status is
-under the headline "Changes not staged for commit." This means that we've made
-changes to files, but we haven't "staged" them; that is, we haven't told git
-that we want those changes stored the next time we tell git to commit.
+This line tells us that we've modified mean.py
+Let's now commit the new changes:
 
-We must add the files we've changed to the stage:
-
-    git add mean.py
-
-Now, let's do a status to see what git tells us:
-
-    git status
-
-Ok, now it tells us that the changes in mean.py will be commited next time we
-run git commit; it also tells us how to unstage the file if we made a mistake.
-
-When we first commited, we added a message inline, but if we want a long,
-multi-line message, we can use a text editor to add the message.  First, we
-specify which editor will be our default:
-
-    git config --global core.editor vim
-
-Instead of vim, you could use emacs or nano or whatever else; and because this
-setting is global, you won't have to do this for your future projects.  We then
-commit without specifying a message:
-
-    git commit
+    git commit -am "Add a comment"
       
-And our editor opens up with the latest status commented out, and we add the
-message at the top:
-
-    Added a comment.
-
-Then we save and exit; if you don't type in a message and exit, the commit is
-cancelled, which is useful when you change your mind and don't want to commit
-just yet.  Now status shows nothing:
+Now status shows nothing:
 
     git status
     git diff
