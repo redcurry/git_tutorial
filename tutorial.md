@@ -129,6 +129,17 @@ And we have a new entry in our history or log:
 
     git log
 
+View changes between revisions
+------------------------------
+
+If we want to know what changed between two different commits,
+we can use git diff with the two revision numbers:
+
+    git diff [commit_id1] [commit_id2]
+
+We don't even have to paste the entire number,
+just enough for them to be unique.
+
 GitHub
 ------
 
@@ -194,17 +205,6 @@ partner, and check to see that they are there:
   git log
 
 Notice the author names in the commits. They should be different.
-
-Comparing different revisions
------------------------------
-
-If we want to know what changed between our older commit and the new commit, we
-use git diff with the two revision numbers:
-
-    git diff [older number] [newer number]
-
-We don't even have to paste the entire number, just enough for them to be
-unique.
 
 Screwing up a file
 ------------------
