@@ -1,29 +1,22 @@
 Introduction
 ------------
 
-Version controls gives you the ability to keep track of changes made to
-documents through time.  Git is a sophisticated, general-purpose version
-control system that gives you a lot of power for managing your documents.  In
-addition to tracking your documents' changes line-by-line, Git makes it easy to
-work on the same project from different computers---either because the project
-is collaborative or simply because you have multiple computers from which you
-want to edit your work.
+Git is a general-purpose version control system
+that gives you a lot of power for managing your projects.
+Git allows you to
 
-Git and other version control systems also have the concept of branches;
-branches allow you to diverge from your main line of work, which is useful when
-you want to explore new ideas or make changes to your project without changing
-your main project.  Later when you're happy with the results of your branch,
-you can incorporate those changes easily back into your main project; I'll show
-you how to use this feature.
+1. Track the history of your project's development through time
+2. Identify changes that occurred between revisions
+3. Safely make changes to your project without losing your original work
+4. Temporarily go back to a previous version without losing the original
+5. Back-up and share your project with others
 
-I've mentioned that Git keeps track of your documents, but what I mean by
-document is any plain text file---whether it's source code, HTML files, or a
-LaTeX manuscript.  You won't be able to track changes line-by-line for
-non-plain text files, like images and Word documents because they don't have
-lines of text; even though Word documents contain text, they also contain
-non-text information about how to format the text.  So if you do your
-manuscripts in Word or a non-plain text word processor, you'll likely use Git
-mostly for source code.
+Perhaps you won't need to do many of these things on very small projects,
+but they become very useful as your software grows.
+
+Note that Git works best with plain text files,
+e.g., source code, HTML files, or a LaTeX manuscript.
+It is not as useful with non-plain text files, like images and Word documents.
 
 Identify yourself
 -----------------
