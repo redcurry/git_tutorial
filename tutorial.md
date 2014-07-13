@@ -231,8 +231,8 @@ So the way you want to use branches is like this:
 This way your master branch can be clean of possible changes that may end up
 being thrown away if those changes are not necessary or don't work.
 
-Go to and use a previous version
---------------------------------
+Go to and use a previous revision
+---------------------------------
 
 If you've submitted your work for publication,
 and you've run your analysis with a specific version of your code,
@@ -246,21 +246,21 @@ Let's see where we are:
 
     git status
 
-Let's pick a previous version to go to:
+Let's pick a previous revision to go to:
 
     git log
 
-Copy the commit id of the version you'd like to go to and then check it out:
+Copy the commit id of the revision you'd like to go to and then check it out:
 
     git checkout [commit_id]
 
-If this is an important version that we'd like to identify,
+If this is an important revision that we'd like to identify,
 perhaps because we'll often refer to it,
 it'll be useful to give it a special name instead of using the commit id:
 
     git tag v1.0
 
-You can now use this tag to go to this specific version:
+You can now use this tag to go to this specific revision:
 
     git checkout master
     git status
