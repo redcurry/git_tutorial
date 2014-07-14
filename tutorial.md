@@ -1,8 +1,34 @@
 Introduction
 ------------
 
-Git is a general-purpose version control system
-that gives you a lot of power for managing your projects.
+Git is a version control system. What is a version control system?
+Let me answer that question by first giving you scenarios
+that I'm sure many of you are familiar with.
+
+1. Let's say you've written a script, you've generated results
+   using that script, and you've published those results.
+   Now you want to add a new feature that's going to take days to write.
+   You start working it, and suddently someone wants to reproduce your results
+   and asks you for your original script. You forgot to save it.
+   You undo the changes you've made---at least the ones you can find.
+   Then you run this "original" script, and guess what?
+   It produces different results with the same data.
+   Your research is now irreproducible.
+2. You've written a script, and you're going on vacation.
+   You hope to keep working on the script while out of town,
+   so you make a copy of it and take your laptop with you.
+   You actually have time to make several changes to the script,
+   saving it on your laptop.
+   Unfortunately, your hotel gets broken into and your laptop is stolen.
+   You lose all your work.
+3. Your advisor thinks he can program, so he asks you for your script.
+   You give it to him.
+   At the same time, you continue to work on your script,
+   adding features, fixing bugs.
+   Days later, your advisor sends you a copy of the script with changes.
+   Now you have two versions of the program you need to integrate,
+   which means you'll have to figure out which changes your advisor made.
+
 Git allows you to
 
 1. Track the history of your project's development through time
