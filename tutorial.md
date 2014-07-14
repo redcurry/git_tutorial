@@ -29,16 +29,17 @@ that I'm sure many of you are familiar with.
    Now you have two versions of the program you need to integrate,
    which means you'll have to figure out which changes your advisor made.
 
-Git allows you to
+These are scenarios that a version control systam, such as Git, will solve.
+Git allows you to:
 
 1. Track the history of your project's development through time
-2. Identify changes that occurred between revisions
+2. Identify changes that occurred between versions
 3. Safely make changes to your project without losing your original work
-4. Temporarily go back to a previous version without losing the original
+4. Temporarily go back to a previous version without losing the original work
 5. Back-up and share your project with others
 
-Perhaps you won't need to do many of these things on very small projects,
-but they become very useful as your software grows.
+Virtually every software project uses some kind of version control system.
+It is essential.
 
 Note that Git works best with plain text files,
 e.g., source code, HTML files, or a LaTeX manuscript.
