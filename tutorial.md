@@ -48,8 +48,8 @@ It is not as useful with non-plain text files, like images and Word documents.
 Identify yourself
 -----------------
 
-Before we start using Git, let's identify ourselves to Git so that all our
-revisions have an author.  This is especially important in collaborative
+Before we start using Git, let's identify ourselves to Git so that all changes
+to the project have an author.  This is especially important in collaborative
 projects because we would like to keep track of who edited something.
 
     git config --global user.name "John Doe"
