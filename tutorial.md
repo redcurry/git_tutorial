@@ -39,7 +39,7 @@ Git allows you to:
 5. Back-up and share your project with others
 
 Virtually every software project uses some kind of version control system.
-It is essential.
+It is an essential tool in software development.
 
 Note that Git works best with plain text files,
 e.g., source code, HTML files, or a LaTeX manuscript.
