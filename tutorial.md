@@ -104,19 +104,21 @@ We've just told git that we want to track this file.
 Initial commit
 --------------
 
-We must also tell git when to save a set of changes that we make (this is
-called a "commit").  Because we've added a file to track, we now want to tell
-git to save this change.
+We must also tell git when to save a set of changes that we make.
+A set of changes is called a "commit" for reasons you'll see in a bit.
+Now, because we've added a file to track,
+we want to tell git to save this change:
 
     git commit -am "Add initial file to project"
 
 It tells you there that you've changed one file, in our case we've addeded it,
-and added 10 lines of text.  We can view a history (or log) of our commits with:
+and added 10 lines of text.
+We can view a history (or log) of our commits with:
 
     git log
 
-This shows you the commit id (also called revision number), author, date, and
-your comment.
+Each entry (just one for now) shows you the commit id
+(also called revision number), author, date, and your comment.
 
 Additional commits
 ------------------
