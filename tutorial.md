@@ -111,8 +111,8 @@ we want to tell git to save this change:
 
     git commit -am "Add initial file to project"
 
-It tells you there that you've changed one file, in our case we've addeded it,
-and added 10 lines of text.
+It tells you there that you've changed one file,
+in our case we've addeded it to the repository, and added 10 lines of text.
 We can view a history (or log) of our commits with:
 
     git log
