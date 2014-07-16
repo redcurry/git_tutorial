@@ -87,13 +87,15 @@ interested in tracking this project:
 
     git init
 
-All this did was to create an empty repository, but it won't automatically
-track all of the files in the project.
+All this did was to create an empty repository.
+A repository is where a project's history will be stored,
+including all the files you've told Git to track.
 
 Add file to repo
 ----------------
     
-We must tell git which files we want to track; and we do this with git add:
+Git won't automatically track all of the files in your project.
+We must tell git which files we want to track. We do this with git add:
 
     git add mean.py
 
