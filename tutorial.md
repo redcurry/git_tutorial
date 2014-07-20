@@ -438,7 +438,10 @@ To mark the file as resolved, we simply say:
     git add mean.py
 
 And then we commit the merge and edit the message:
+By saying commit on its own, it will open an editor and put an automatic
+merge message there---let's specify which editor to open first:
 
+    git config --global core.editor nano
     git commit
 
 Now let's look at our log to confirm that the merge is in our history:
@@ -450,3 +453,6 @@ history of the changes made in the other branch.  Finally, let's delete the old
 branch:
 
     git branch -d new_change
+
+(If there is time, discuss the stage and how git commit -am is really git add,
+followed by git commit.)
