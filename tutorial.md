@@ -160,6 +160,9 @@ And we have a new entry in our history or log:
 
     git log
 
+**Exercise**: Add one or two more commits by modifying the program slightly
+(perhaps add more comments or change a variable name).
+
 View changes between revisions
 ------------------------------
 
@@ -174,8 +177,8 @@ just enough for them to be unique.
 Make parallel changes
 ---------------------
 
-Let's say we want to extend the functionality of our python program
-to calculate the mean of numbers in a file.
+Let's say we want to extend the functionality of our Python program
+to read the numbers from a file rather than from the standard input.
 We could edit mean.py as we've done and commit the changes,
 but say we're not exactly sure what needs to be changed.
 We don't want to screw around with our original mean.py because it works.
