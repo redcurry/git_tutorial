@@ -265,6 +265,9 @@ So the way you want to use branches is like this:
 This way your master branch can be clean of possible changes that may end up
 being thrown away if those changes are not necessary or don't work.
 
+**Exercise**: Move the 'data.txt' into a variable below import statement.
+Do this in a new branch called "file_var"
+
 Go to and use a previous revision
 ---------------------------------
 
