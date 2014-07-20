@@ -394,13 +394,13 @@ For example, let's make a new branch and change a line:
     git checkout -b new_change
 
     ...
-    file_name = 'data.txt'
-    for num in open(file_name):
+    fileName = 'data.txt'
+    for num in open(fileName):
     ...
 
 Test it, and then commit those changes:
 
-    git commit -am "Create file_name variable"
+    git commit -am "Change variable name to fileName"
 
 Let's switch back to our master branch, and make changes to a line we changed
 in our other branch (change the data file name).
@@ -408,12 +408,13 @@ in our other branch (change the data file name).
     git checkout master
 
     ...
-    for num in open('data_2.txt'):
+    nameOfFile = 'data.txt'
+    for num in open(nameOfFile):
     ...
 
 Test it, and commit it:
 
-    git commit -am "Change the data file name"
+    git commit -am "Change variable name to nameOfFile"
 
 Now let's merge the changes we made in our new_change branch into our master
 branch:
@@ -428,8 +429,8 @@ branch, and the stuff between `============` and `>>>>>>>>>>>> new_change` is
 in the new_change branch.  Let's manually merge these changes:
 
     ...
-    file_name = 'data_2.txt'
-    for num in open(file_name):
+    fileName = 'data.txt'
+    for num in open(fileName):
     ...
 
 To mark the file as resolved, we simply say:
