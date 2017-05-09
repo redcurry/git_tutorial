@@ -102,7 +102,7 @@ The stage and committing
 Let's make changes to our program and then commit those. Let's add comments to
 our code.
 
-  # Sum input values
+    # Sum input values
 
 At this point, the file we've changed and the file that's in the repository are
 different.  We can check what those differences are with:
