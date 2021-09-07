@@ -216,19 +216,19 @@ file(s) but also its history:
 Edit mean.py in some way (perhaps change a variable name). Then add the file
 and commit (with a meaningful message):
 
-  git add mean.py
-  git commit -m "Edited the program."
+    git add mean.py
+    git commit -m "Edited the program."
 
 Check the log and notice your new commit entry. Now push your changes to
 GitHub:
 
-  git push
+    git push
 
 Go back to your original project. Get (or pull) the changes made by your group
 partner, and check to see that they are there:
 
-  git pull
-  git log
+    git pull
+    git log
 
 Notice the author names in the commits. They should be different.
 
